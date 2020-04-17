@@ -2,9 +2,7 @@
 title: "Gender Wage Gap"
 author: "Bismark Adomako"
 date: "April 17, 2020"
-output:
-  pdf_document: default
-  html_document: default
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
