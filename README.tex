@@ -1,0 +1,176 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Gender Wage Gap},
+            pdfauthor={Bismark Adomako},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Gender Wage Gap}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Bismark Adomako}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{April 17, 2020}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{goals}{%
+\subsection{Goals}\label{goals}}
+
+Here we ask and answer the following question: What is the difference in
+predicted wages between men and women with the same job-relevant
+characteristics?
+
+\hypertarget{content-of-repo}{%
+\subsection{Content of Repo}\label{content-of-repo}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  data/codebook.rtf contains the description of worker job-relevant
+  worker characteristics.
+\item
+  data/pay.descrimination.Rdata: the CPS (2012) data on wages and
+  job-relevant worker characteristics, suc as experience exp, gender,
+  education, etc.
+\item
+  gender\_wage\_gap.R predicts the difference in predicted wages between
+  men and women with the same job-relevant characteristics using linear
+  model with linear specificaions.
+\end{enumerate}
+
+\hypertarget{data-summary}{%
+\subsection{Data Summary}\label{data-summary}}
+
+\begin{verbatim}
+       male averages female averages
+female     0.0000000       1.0000000
+cg         0.3548387       0.4061135
+sc         0.3019713       0.3543356
+hsg        0.3431900       0.2395508
+mw         0.2849462       0.2913288
+so         0.2352151       0.2551466
+we         0.2213262       0.1983780
+ne         0.2585125       0.2551466
+exp1      13.5801971      13.0371179
+exp2       2.5865883       2.4494526
+exp3       5.9649377       5.5992975
+wage      16.1174580      14.7200584
+\end{verbatim}
+
+\hypertarget{specifications}{%
+\subsection{Specifications}\label{specifications}}
+
+We estimate the linear regression model:
+
+\begin{verbatim}
+    Y = β1D + βr W + ε
+    
+\end{verbatim}
+
+D is the indicator of being a female (1 if female and 0 otherwise). W's
+are controls. Basic model: W's consist of education and regional
+indicators, experience, experience squared, and experience cubed.
+Flexible model: W's consist of controls in the basic model plus all of
+their two-way interactions.
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+\begin{verbatim}
+           Estimate Standard Error Lower Conf. Bound Upper Conf. Bound
+basic reg -1.826397      0.4245163         -2.658697        -0.9940968
+flex reg  -1.880013      0.4247438         -2.712761        -1.0472652
+\end{verbatim}
+
+The estimated gender gap in hourly wage is about \$−2.0 with a
+confidence interval that ranges from about \$−2.7 to \$−1. This means
+that women get paid \$2 less per hour on average than men, controlling
+for experience, education, and geographicalregion.
+
+\hypertarget{conclusion}{%
+\subsection{Conclusion}\label{conclusion}}
+
+To sum it up\ldots{} The gender wage gap may partly reflect genuine
+discrimination against women in the labormarket\ldots{}. It may also
+partly reflect the so-called selection effect, namely that women are
+more likely to end up in occupations that pay somewhat less (for
+example, school teachers).
+
+
+\end{document}

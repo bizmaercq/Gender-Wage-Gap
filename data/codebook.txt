@@ -1,0 +1,22 @@
+Codebook for pay.discrimination.Rdata dataset.
+05/09/2016
+
+The dataset is compiled from 2012 Current Population Survey, March Supplement.
+The sample includes never-married individuals who are either collage or high school
+graduates or have some collage education.
+
+The dataset contains the following variables:
+
+wage   : weekly wage
+female : female dummy
+cg     : collage Graduate Dummy
+sc     : some collage dummy
+hsg    : High School graduate dummy
+mw     : midwest dummy
+so     : south dummy
+we     : west dummy
+ne     : northeast dummy
+exp1   : experience(year)
+exp2   : experience squared
+exp3   : experinence cubed
+
